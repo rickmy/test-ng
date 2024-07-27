@@ -1,1 +1,82 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #e6e6e6;
+  font-size: 16px;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif, 'system-ui';
+}
+
+input {
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+
+.required:after{
+  content: ' *';
+  color: red;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  width: 100%;
+}
+
+.btn-submit {
+  background-color: #007bff;
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0.5rem 1rem;
+}
+
+.btn-submit:hover {
+  background-color: #0056b3;
+}
+
+.btn-add {
+  background-color: #ffdd00;
+  border: none;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 1rem 1.5rem;
+}
+
+.btn-add:hover {
+  background-color: #ebcc03;
+}
+
+
+.btn-secondary {
+  background-color: #d9dbdd;
+  border: none;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0.5rem 1rem;
+}
+
+.btn-secondary:hover {
+  background-color: #cbcece;
+}
