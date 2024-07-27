@@ -1,0 +1,167 @@
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="save()" class="form">
+    <div class="form-header">
+      <h2>Formulario de Registro</h2>
+    </div>
+    <div class="form-body">
+      <div class="form-separator">
+        <div class="input-group">
+          <label for="id">ID</label>
+          <input
+            type="text"
+            id="id"
+            name="id"
+            [maxlength]="10"
+            [ngClass]="{ 'input-invalid': f['id'].errors && f['id'].touched }"
+            formControlName="id"
+          />
+          @if (f["id"].errors?.["required"] && f["id"].touched) {
+            <small class="invalid-feedback">ID obligatorio!</small>
+          }
+          @if (f["id"].errors?.["minlength"] && f["id"].touched) {
+            <small class="invalid-feedback">El mínimo de caracteres es 3</small>
+          }
+          @if (f["id"].errors?.["maxlength"] && f["id"].touched) {
+            <small class="invalid-feedback"
+              >El máximo de caracteres es 10</small
+            >
+          }
+          @if (f["id"].errors?.["idExists"]) {
+            <small class="invalid-feedback">ID ya en uso</small>
+          }
+        </div>
+        <div class="input-group">
+          <label for="name">Nombre</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [ngClass]="{
+              'input-invalid': f['name'].errors && f['name'].touched,
+            }"
+            formControlName="name"
+          />
+          @if (f["name"].errors?.["required"] && f["name"].touched) {
+            <small class="invalid-feedback">Nombre es obligatorio!</small>
+          }
+          @if (f["name"].errors?.["minlength"] && f["name"].touched) {
+            <small class="invalid-feedback"
+              >El mínimo de caracteres es
+              {{ f["name"].errors?.["minlength"]?.["requiredLength"] }}</small
+            >
+          }
+          @if (f["name"].errors?.["maxlength"] && f["name"].touched) {
+            <small class="invalid-feedback"
+              >El máximo de caracteres es
+              {{ f["name"].errors?.["maxlength"]?.["requiredLength"] }}</small
+            >
+          }
+        </div>
+      </div>
+      <div class="form-separator">
+        <div class="input-group">
+          <label for="description">Descripción</label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            [ngClass]="{
+              'input-invalid':
+                f['description'].errors && f['description'].touched,
+            }"
+            formControlName="description"
+          />
+          @if (
+            f["description"].errors?.["required"] && f["description"].touched
+          ) {
+            <small class="invalid-feedback">Descripción es obligatorio!</small>
+          }
+          @if (
+            f["description"].errors?.["minlength"] && f["description"].touched
+          ) {
+            <small class="invalid-feedback"
+              >El mínimo de caracteres es
+              {{
+                f["description"].errors?.["minlength"]?.["requiredLength"]
+              }}</small
+            >
+          }
+          @if (
+            f["description"].errors?.["maxlength"] && f["description"].touched
+          ) {
+            <small class="invalid-feedback"
+              >El máximo de caracteres es
+              {{
+                f["description"].errors?.["maxlength"]?.["requiredLength"]
+              }}</small
+            >
+          }
+        </div>
+        <div class="input-group">
+          <label for="logo">Logo</label>
+          <input
+            type="text"
+            id="logo"
+            name="logo"
+            [ngClass]="{
+              'input-invalid': f['logo'].errors && f['logo'].touched,
+            }"
+            formControlName="logo"
+          />
+          @if (f["logo"].errors?.["required"] && f["logo"].touched) {
+            <small class="invalid-feedback">El logo es obligatorio!</small>
+          }
+        </div>
+      </div>
+      <div class="form-separator">
+        <div class="input-group">
+          <label for="date_release">Fecha Liberación</label>
+          <input
+            type="date"
+            id="date_release"
+            name="date_release"
+            formControlName="date_release"
+            [ngClass]="{
+              'input-invalid':
+                f['date_release'].errors && f['date_release'].touched,
+            }"
+          />
+          @if (
+            f["date_release"].errors?.["required"] && f["date_release"].touched
+          ) {
+            <small class="invalid-feedback"
+              >La fecha liberación es obligatorio!</small
+            >
+          }
+          @if (
+            f["date_release"].errors?.["invalidDate"] &&
+            f["date_release"].touched
+          ) {
+            <small class="invalid-feedback"
+              >La fecha liberación debe ser igual o mayor a la fecha
+              actual!</small
+            >
+          }
+        </div>
+        <div class="input-group">
+          <label
+            for="date_revision"
+            [ngClass]="{ 'label-disabled': f['date_revision'].disabled }"
+            >Fecha Revisión</label
+          >
+          <input
+            type="date"
+            id="date_revision"
+            name="date_revision"
+            formControlName="date_revision"
+            [ngClass]="{ 'input-disabled': f['date_revision'].disabled }"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="form-footer">
+      <button class="btn-secondary" (click)="clearForm()">Reiniciar</button>
+      <button class="btn-add" type="submit">Enviar</button>
+    </div>
+  </form>
+</div>

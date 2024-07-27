@@ -1,0 +1,41 @@
+<div class="container">
+  <span>{{ total }} Resultados</span>
+  <div class="container-pagination">
+    <button
+      class="btn-secondary"
+      (click)="changePageCurrent(page - 1)"
+      [disabled]="page === 1"
+    >
+      Anterior
+    </button>
+    <div class="page-numbers">
+      @for (item of listPages; track $index) {
+        <button
+          class="btn-secondary"
+          (click)="changePageCurrent(item)"
+          [class.active]="page === item"
+        >
+          {{ item }}
+        </button>
+      }
+    </div>
+    <button
+      class="btn-secondary"
+      (click)="changePageCurrent(page + 1)"
+      [disabled]="page === totalPage"
+    >
+      Siguiente
+    </button>
+  </div>
+  <select
+    name="row"
+    id="row"
+    [(ngModel)]="row"
+    class="select-pagination"
+    (change)="changeCountedRow()"
+  >
+    @for (item of optionsRow; track $index) {
+      <option [value]="item">{{ item }}</option>
+    }
+  </select>
+</div>
