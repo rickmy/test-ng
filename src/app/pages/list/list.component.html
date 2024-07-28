@@ -21,8 +21,8 @@
             <td><img [src]="item.logo" alt="" srcset="" class="avatar" /></td>
             <td>{{ item.name }}</td>
             <td>{{ item.description }}</td>
-            <td>{{ item.date_release | date: "dd/MM/yyyy" }}</td>
-            <td>{{ item.date_revision | date: "dd/MM/yyyy" }}</td>
+            <td>{{ item.date_release | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ item.date_revision | date: 'dd/MM/yyyy' }}</td>
             <td>
               <div class="image-container">
                 <div class="dot"></div>
@@ -54,8 +54,7 @@
         [page]="pageCurrent"
         [row]="row"
         (changePage)="changePage($event)"
-        (changeRow)="getAllProducts($event)"
-      />
+        (changeRow)="getAllProducts($event)" />
     }
   </div>
 </div>
@@ -64,6 +63,5 @@
   <app-confirmation-modal
     [title]="product!.name"
     (cancel)="hiddenModal()"
-    (confirm)="deleteProduct()"
-  />
+    (confirm)="deleteProduct()" />
 }

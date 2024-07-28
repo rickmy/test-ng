@@ -13,20 +13,19 @@
             name="id"
             [maxlength]="10"
             [ngClass]="{ 'input-invalid': f['id'].errors && f['id'].touched }"
-            formControlName="id"
-          />
-          @if (f["id"].errors?.["required"] && f["id"].touched) {
+            formControlName="id" />
+          @if (f['id'].errors?.['required'] && f['id'].touched) {
             <small class="invalid-feedback">ID obligatorio!</small>
           }
-          @if (f["id"].errors?.["minlength"] && f["id"].touched) {
+          @if (f['id'].errors?.['minlength'] && f['id'].touched) {
             <small class="invalid-feedback">El mínimo de caracteres es 3</small>
           }
-          @if (f["id"].errors?.["maxlength"] && f["id"].touched) {
+          @if (f['id'].errors?.['maxlength'] && f['id'].touched) {
             <small class="invalid-feedback"
               >El máximo de caracteres es 10</small
             >
           }
-          @if (f["id"].errors?.["idExists"]) {
+          @if (f['id'].errors?.['idExists']) {
             <small class="invalid-feedback">ID ya en uso</small>
           }
         </div>
@@ -39,21 +38,20 @@
             [ngClass]="{
               'input-invalid': f['name'].errors && f['name'].touched,
             }"
-            formControlName="name"
-          />
-          @if (f["name"].errors?.["required"] && f["name"].touched) {
+            formControlName="name" />
+          @if (f['name'].errors?.['required'] && f['name'].touched) {
             <small class="invalid-feedback">Nombre es obligatorio!</small>
           }
-          @if (f["name"].errors?.["minlength"] && f["name"].touched) {
+          @if (f['name'].errors?.['minlength'] && f['name'].touched) {
             <small class="invalid-feedback"
               >El mínimo de caracteres es
-              {{ f["name"].errors?.["minlength"]?.["requiredLength"] }}</small
+              {{ f['name'].errors?.['minlength']?.['requiredLength'] }}</small
             >
           }
-          @if (f["name"].errors?.["maxlength"] && f["name"].touched) {
+          @if (f['name'].errors?.['maxlength'] && f['name'].touched) {
             <small class="invalid-feedback"
               >El máximo de caracteres es
-              {{ f["name"].errors?.["maxlength"]?.["requiredLength"] }}</small
+              {{ f['name'].errors?.['maxlength']?.['requiredLength'] }}</small
             >
           }
         </div>
@@ -69,30 +67,29 @@
               'input-invalid':
                 f['description'].errors && f['description'].touched,
             }"
-            formControlName="description"
-          />
+            formControlName="description" />
           @if (
-            f["description"].errors?.["required"] && f["description"].touched
+            f['description'].errors?.['required'] && f['description'].touched
           ) {
             <small class="invalid-feedback">Descripción es obligatorio!</small>
           }
           @if (
-            f["description"].errors?.["minlength"] && f["description"].touched
+            f['description'].errors?.['minlength'] && f['description'].touched
           ) {
             <small class="invalid-feedback"
               >El mínimo de caracteres es
               {{
-                f["description"].errors?.["minlength"]?.["requiredLength"]
+                f['description'].errors?.['minlength']?.['requiredLength']
               }}</small
             >
           }
           @if (
-            f["description"].errors?.["maxlength"] && f["description"].touched
+            f['description'].errors?.['maxlength'] && f['description'].touched
           ) {
             <small class="invalid-feedback"
               >El máximo de caracteres es
               {{
-                f["description"].errors?.["maxlength"]?.["requiredLength"]
+                f['description'].errors?.['maxlength']?.['requiredLength']
               }}</small
             >
           }
@@ -106,9 +103,8 @@
             [ngClass]="{
               'input-invalid': f['logo'].errors && f['logo'].touched,
             }"
-            formControlName="logo"
-          />
-          @if (f["logo"].errors?.["required"] && f["logo"].touched) {
+            formControlName="logo" />
+          @if (f['logo'].errors?.['required'] && f['logo'].touched) {
             <small class="invalid-feedback">El logo es obligatorio!</small>
           }
         </div>
@@ -124,18 +120,17 @@
             [ngClass]="{
               'input-invalid':
                 f['date_release'].errors && f['date_release'].touched,
-            }"
-          />
+            }" />
           @if (
-            f["date_release"].errors?.["required"] && f["date_release"].touched
+            f['date_release'].errors?.['required'] && f['date_release'].touched
           ) {
             <small class="invalid-feedback"
               >La fecha liberación es obligatorio!</small
             >
           }
           @if (
-            f["date_release"].errors?.["invalidDate"] &&
-            f["date_release"].touched
+            f['date_release'].errors?.['invalidDate'] &&
+            f['date_release'].touched
           ) {
             <small class="invalid-feedback"
               >La fecha liberación debe ser igual o mayor a la fecha
@@ -154,8 +149,7 @@
             id="date_revision"
             name="date_revision"
             formControlName="date_revision"
-            [ngClass]="{ 'input-disabled': f['date_revision'].disabled }"
-          />
+            [ngClass]="{ 'input-disabled': f['date_revision'].disabled }" />
         </div>
       </div>
     </div>

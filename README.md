@@ -1,27 +1,32 @@
-# Neoris
+## Getting Started
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.8.
+### Clone the Repository
 
-## Development server
+To clone the repository to your local machine, navigate to the directory where you want to store the project and run the following command:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+```bash
+git clone https://github.com/rickmy/neoris.git
+```
 
-## Code scaffolding
+### Installation
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To install the dependencies, run the following command inside the repository folder:
 
-## Build
+```bash
+npm install 
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Running the App
+```base
+ng serve
+```
+or to open in a new browser tab automatically
+```base
+ng serve -o
+```
 
-## Running unit tests
+## Running Tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+To run tests with coverage, use the following command `npm run test`.
+This command will execute the unit tests and generate a coverage report.
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

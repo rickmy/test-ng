@@ -1,8 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-import {HttpClient, HttpInterceptorFn} from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient, provideHttpClient,
+} from '@angular/common/http';
 
 import { authorInterceptor } from './author.interceptor';
-import {HttpTestingController} from "@angular/common/http/testing";
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
+import { environment } from '@env/environment.development';
 
 describe('authorInterceptor', () => {
   let httpMock: HttpTestingController;
@@ -10,30 +17,28 @@ describe('authorInterceptor', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       providers: [
-        {
-          provide: HttpClient,
-          useValue: {
-            get: () => {},
-          },
-        },
-      ],
+        provideHttpClient(),
+        { provide: HTTP_INTERCEPTORS, useClass: authorInterceptor, multi: true }
+      ]
     });
+
     httpMock = TestBed.inject(HttpTestingController);
     httpClient = TestBed.inject(HttpClient);
-  })
-
-  afterEach(() => {
-    httpMock.verify();
   });
 
-  it('should add authorId header', () => {
-    const authorId = '234';
-    const url = 'https://api.com';
-    httpClient.get(url).subscribe();
-    const req = httpMock.expectOne(url);
-    expect(req.request.headers.get('authorId')).toBe(authorId);
 
+  it('should add an authorId header', () => {
+    httpClient.get(environment.urlBase).subscribe(response => {
+      expect(response).toBeTruthy();
+    });
+
+    const httpRequest = httpMock.expectOne('/data');
+
+    expect(httpRequest.request.headers.has('authorId')).toEqual(true);
+    expect(httpRequest.request.headers.get('authorId')).toBe('234');
   });
+
 
 });

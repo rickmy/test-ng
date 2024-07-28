@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '@models/products/product';
+import {environment} from "@env/environment";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  urlBase =
-    'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/';
 
+  urlBase = environment.urlBase;
   constructor(private _httpClient: HttpClient) {}
 
   getProducts() {

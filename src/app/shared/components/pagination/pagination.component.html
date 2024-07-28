@@ -4,8 +4,7 @@
     <button
       class="btn-secondary"
       (click)="changePageCurrent(page - 1)"
-      [disabled]="page === 1"
-    >
+      [disabled]="page === 1">
       Anterior
     </button>
     <div class="page-numbers">
@@ -13,8 +12,7 @@
         <button
           class="btn-secondary"
           (click)="changePageCurrent(item)"
-          [class.active]="page === item"
-        >
+          [class.active]="page === item">
           {{ item }}
         </button>
       }
@@ -22,8 +20,7 @@
     <button
       class="btn-secondary"
       (click)="changePageCurrent(page + 1)"
-      [disabled]="page === totalPage"
-    >
+      [disabled]="page === totalPage">
       Siguiente
     </button>
   </div>
@@ -32,8 +29,7 @@
     id="row"
     [(ngModel)]="row"
     class="select-pagination"
-    (change)="changeCountedRow()"
-  >
+    (change)="changeCountedRow()">
     @for (item of optionsRow; track $index) {
       <option [value]="item">{{ item }}</option>
     }
