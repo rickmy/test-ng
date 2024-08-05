@@ -66,11 +66,11 @@ export class ListComponent implements OnInit, OnDestroy {
     this._productService
       .getProducts()
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((products) => {
-        this.products = products;
-        products.length > this.row
+      .subscribe((res) => {
+        this.products = res.data;
+        res.data.length > this.row
           ? this.getAllProducts(this.row)
-          : (this.productsFiltered = products);
+          : (this.productsFiltered = res.data);
         this.changePage(this.pageCurrent);
         this._cd.detectChanges();
       });
@@ -88,11 +88,11 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   redirectNew() {
-    this._router.navigate(['new']);
+    this._router.navigate(['new']).then();
   }
 
   redirectEdit(id: string) {
-    this._router.navigate(['edit', id]);
+    this._router.navigate(['edit', id]).then();
   }
 
   showModal(product: Product) {

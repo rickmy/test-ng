@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '@models/products/product';
 import {environment} from "@env/environment";
+import { GeneralResponse } from '@models/general/general-response';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +13,12 @@ export class ProductService {
   constructor(private _httpClient: HttpClient) {}
 
   getProducts() {
-    return this._httpClient.get<Product[]>(`${this.urlBase}bp/products`);
+    return this._httpClient.get<GeneralResponse<Product>>(`${this.urlBase}bp/products`);
   }
 
   verifyId(id: string) {
     return this._httpClient.get<boolean>(
-      `${this.urlBase}bp/products/verification`,
+      `${this.urlBase}bp/products/verification/uno`,
       {
         params: {
           id,

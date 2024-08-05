@@ -138,7 +138,7 @@ export class NewComponent implements OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
         this.clearForm();
-        this._router.navigate(['/list']);
+        this._router.navigate(['/list']).then();
         this._toastService.openToast({
           severity: 'success',
           detail: 'Producto creado correctamente',
@@ -169,7 +169,7 @@ export class NewComponent implements OnDestroy {
       .getProducts()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((products) => {
-        this.product = products.find((product) => product.id === id)!;
+        this.product = products.data.find((product) => product.id === id)!;
         this.form.patchValue({
           ...this.product,
           date_release: this.product.date_release.split('T')[0],
