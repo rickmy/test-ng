@@ -5,7 +5,7 @@
 To clone the repository to your local machine, navigate to the directory where you want to store the project and run the following command:
 
 ```bash
-git clone https://github.com/rickmy/neoris.git
+git clone https://github.com/rickmy/test-ng.git
 ```
 
 ### Installation
