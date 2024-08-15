@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, AfterViewInit } from '@angular/core';
 import { ToastService } from '../../../services/toast/toast.service';
 
 @Component({
@@ -8,12 +8,12 @@ import { ToastService } from '../../../services/toast/toast.service';
   templateUrl: './toast.component.html',
   styleUrl: './toast.component.css',
 })
-export class ToastComponent implements OnInit {
+export class ToastComponent implements AfterViewInit {
   private _toastService = inject(ToastService);
   toast = this._toastService.toast;
   display = this._toastService.display;
 
-  ngOnInit(): void {
+  ngAfterViewInit() {
     this.automaticClose();
   }
 

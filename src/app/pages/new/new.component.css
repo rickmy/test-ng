@@ -54,15 +54,25 @@
   color: #ccc;
 }
 
-.progress-bar {
-  background-color: #f9f9f9;
-  border-radius: 0.5rem;
-  height: 1rem;
-  width: 100%;
-}
+@media (max-width: 575.98px) { 
 
-.progress-bar-fill {
-  background-color: #007bff;
-  border-radius: 0.5rem;
-  height: 100%;
-}
+  .form {
+    width: 100%;
+  }
+
+  .form-separator {
+    flex-direction: column;
+  }
+
+  .input-group {
+    width: 100%;
+  }
+ }
+
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+
+  .form {
+    width: 75%;
+  }
+ }

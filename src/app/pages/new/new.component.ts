@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '@models/products/product';
 import { ToastService } from '@services/toast/toast.service';
 import { ProductService } from '@services/api/product.service';
+import { dateValidator } from '@shared/validators/date.validator';
 
 @Component({
   selector: 'app-new',
@@ -25,7 +26,7 @@ import { ProductService } from '@services/api/product.service';
 export class NewComponent implements OnDestroy {
   unsubscribe$ = new Subject<void>();
   form!: FormGroup;
-  today = new Date();
+  today =  Date.now();
   product: Product | undefined;
 
   constructor(
@@ -55,16 +56,9 @@ export class NewComponent implements OnDestroy {
     this.f['date_release'].valueChanges
       .pipe(distinctUntilChanged(), takeUntil(this.unsubscribe$))
       .subscribe((value: string) => {
-        if (new Date(value) >= this.today) {
-          const dateReleaseToArray = value.split('-');
+        const dateReleaseToArray = value.split('-');
           dateReleaseToArray[0] = (+dateReleaseToArray[0] + 1).toString();
           this.f['date_revision'].setValue(dateReleaseToArray.join('-'));
-          this.f['date_release'].setErrors(null);
-        } else {
-          this.f['date_revision'].setValue(null);
-          this.f['date_release'].setErrors({ invalidDate: true });
-        }
-        this.f['date_revision'].updateValueAndValidity();
       });
   }
 
@@ -95,10 +89,12 @@ export class NewComponent implements OnDestroy {
         ],
       ],
       logo: [null, Validators.required],
-      date_release: [null, [Validators.required]],
+      date_release: [null, [Validators.required, dateValidator()]],
       date_revision: [{ value: null, disabled: true }, [Validators.required]],
     });
   }
+
+ 
 
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;

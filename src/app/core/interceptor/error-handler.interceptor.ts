@@ -8,7 +8,7 @@ export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (error.error instanceof ErrorEvent) {
+      if (error.error && error.error.message) {
         toast.openToast({ severity: 'error', detail: error.error.message });
       } else {
         toast.openToast({
