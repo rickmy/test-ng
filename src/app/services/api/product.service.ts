@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Product } from '@models/products/product';
 import {environment} from "@env/environment";
 import { GeneralResponse } from '@models/general/general-response';
+import { ResponseApi } from '@models/general/responseApi';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,31 +20,22 @@ export class ProductService {
 
   verifyId(id: string) {
     return this._httpClient.get<boolean>(
-      `${this._urlBaseProducts}/verification/uno`,
-      {
-        params: {
-          id,
-        },
-      },
+      `${this._urlBaseProducts}/verification/${id}`
     );
   }
 
-  postProduct(product: Product) {
-    return this._httpClient.post<Product>(
+  postProduct(product: Product): Observable<ResponseApi<Product>> {
+    return this._httpClient.post<ResponseApi<Product>>(
       this._urlBaseProducts,
       product,
     );
   }
 
-  putProduct(product: Product) {
-    return this._httpClient.put<Product>(`${this._urlBaseProducts}/uno`, product);
+  putProduct(product: Product): Observable<ResponseApi<Product>> {
+    return this._httpClient.put<ResponseApi<Product>>(`${this._urlBaseProducts}/${product.id}`, product);
   }
 
-  deleteProduct(id: string) {
-    return this._httpClient.delete<void>(`${this._urlBaseProducts}/dos`, {
-      params: {
-        id,
-      },
-    });
+  deleteProduct(id: string): Observable<ResponseApi<Product>> {
+    return this._httpClient.delete<ResponseApi<Product>>(`${this._urlBaseProducts}/${id}`);
   }
 }

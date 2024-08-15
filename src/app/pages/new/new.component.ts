@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, filter, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '@models/products/product';
 import { ToastService } from '@services/toast/toast.service';
@@ -47,6 +47,7 @@ export class NewComponent implements OnDestroy {
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
+        filter((value) => value.length > 0),
         takeUntil(this.unsubscribe$),
       )
       .subscribe((value) => {
@@ -110,6 +111,7 @@ export class NewComponent implements OnDestroy {
           : this.f['id'].setErrors(null);
       });
     this.f['id'].updateValueAndValidity();
+    this.f['id'].markAsTouched();
   }
 
   clearForm() {
@@ -132,12 +134,12 @@ export class NewComponent implements OnDestroy {
         date_revision: this.f['date_revision'].value,
       })
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => {
+      .subscribe((res) => {
         this.clearForm();
         this._router.navigate(['/list']).then();
         this._toastService.openToast({
           severity: 'success',
-          detail: 'Producto creado correctamente',
+          detail: res.message,
         });
       });
   }
@@ -150,7 +152,11 @@ export class NewComponent implements OnDestroy {
         date_revision: this.f['date_revision'].value,
       })
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => {
+      .subscribe((res) => {
+        this._toastService.openToast({
+          severity: 'success',
+          detail: res.message,
+        });
         this.clearForm();
       });
   }

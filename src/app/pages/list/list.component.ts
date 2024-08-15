@@ -7,6 +7,7 @@ import { ProductService } from '@services/api/product.service';
 import { DatePipe } from '@angular/common';
 import { PaginationComponent } from '@shared/components/pagination/pagination.component';
 import { ConfirmationModalComponent } from '@shared/components/confirmation-modal/confirmation-modal.component';
+import { ToastService } from '@services/toast/toast.service';
 
 @Component({
   selector: 'app-list',
@@ -36,6 +37,7 @@ export class ListComponent implements OnInit, OnDestroy {
     private _productService: ProductService,
     private _router: Router,
     private _cd: ChangeDetectorRef,
+    private _toastService: ToastService,
   ) {}
 
   ngOnInit(): void {
@@ -108,7 +110,11 @@ export class ListComponent implements OnInit, OnDestroy {
     this._productService
       .deleteProduct(this.product!.id)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => {
+      .subscribe((res) => {
+        this._toastService.openToast({
+          severity: 'success',
+          detail: res.message,
+        });
         this.getProducts();
         this.hiddenModal();
       });
