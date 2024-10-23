@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -28,8 +28,7 @@ import { dateValidator } from '@shared/validators/date.validator';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './new.component.html',
-  styleUrl: './new.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './new.component.css'
 })
 export class NewComponent implements OnDestroy {
   unsubscribe$ = new Subject<void>();

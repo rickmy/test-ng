@@ -8,7 +8,7 @@ import { Product } from '@models/products/product';
 describe('ProductService', () => {
   let service: ProductService;
   let httpMock: HttpTestingController;
-  let urlBase = environment.urlBase;
+  const urlBase = environment.urlBase;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -29,9 +29,9 @@ describe('ProductService', () => {
       { id: '1', name: 'Product 1', description: 'Description 1', logo: 'Logo 1', date_revision: '2021-01-01', date_release: '2021-01-01' },
     ];
 
-    service.getProducts().subscribe(products => {
-      expect(products.length).toBe(2);
-      expect(products).toEqual(dummyProducts);
+    service.getProducts().subscribe(res => {
+      expect(res.data.length).toBe(2);
+      expect(res.data).toEqual(dummyProducts);
     });
 
     const req = httpMock.expectOne(`${urlBase}bp/products`);

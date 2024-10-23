@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -36,7 +36,6 @@ export class ListComponent implements OnInit, OnDestroy {
   constructor(
     private _productService: ProductService,
     private _router: Router,
-    private _cd: ChangeDetectorRef,
     private _toastService: ToastService,
   ) {}
 
@@ -74,7 +73,6 @@ export class ListComponent implements OnInit, OnDestroy {
           ? this.getAllProducts(this.row)
           : (this.productsFiltered = res.data);
         this.changePage(this.pageCurrent);
-        this._cd.detectChanges();
       });
   }
 
