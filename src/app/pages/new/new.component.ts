@@ -8,7 +8,15 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Subject, debounceTime, distinctUntilChanged, filter, takeUntil } from 'rxjs';
+import {
+  Subject,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  takeUntil,
+  tap,
+} from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '@models/products/product';
 import { ToastService } from '@services/toast/toast.service';
@@ -26,40 +34,60 @@ import { dateValidator } from '@shared/validators/date.validator';
 export class NewComponent implements OnDestroy {
   unsubscribe$ = new Subject<void>();
   form!: FormGroup;
-  today =  Date.now();
+  today = Date.now();
   product: Product | undefined;
+  idProduct: string | null = null;
 
   constructor(
     private _fb: FormBuilder,
     private _productService: ProductService,
     private _router: Router,
     private _activeRoute: ActivatedRoute,
-    private _toastService: ToastService,
+    private _toastService: ToastService
   ) {
     this._activeRoute.params
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((params) => {
-        if (params['id']) this.getProduct(params['id']);
+      .pipe(
+        filter(({ id }) => !!id),
+        tap(({ id }) => (this.idProduct = id)),
+        switchMap(() => this._productService.getProducts()),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe(products => {
+        this.product = products.data.find(
+          product => product.id === this.idProduct
+        )!;
+        this.form.patchValue({
+          ...this.product,
+          date_release: this.product.date_release.split('T')[0],
+          date_revision: this.product.date_revision.split('T')[0],
+        });
+        this.f['id'].disable();
+        this.f['id'].setValue(this.idProduct);
       });
+
     this.builderForm();
 
     this.f['id'].valueChanges
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
-        filter((value) => value.length > 0),
-        takeUntil(this.unsubscribe$),
+        filter(value => value.length > 0),
+        takeUntil(this.unsubscribe$)
       )
-      .subscribe((value) => {
+      .subscribe(value => {
         if (!this.product) this.verifyId(value);
       });
 
     this.f['date_release'].valueChanges
-      .pipe(distinctUntilChanged(), takeUntil(this.unsubscribe$))
+      .pipe(
+        distinctUntilChanged(),
+        takeUntil(this.unsubscribe$),
+        filter(value => !!value)
+      )
       .subscribe((value: string) => {
         const dateReleaseToArray = value.split('-');
-          dateReleaseToArray[0] = (+dateReleaseToArray[0] + 1).toString();
-          this.f['date_revision'].setValue(dateReleaseToArray.join('-'));
+        dateReleaseToArray[0] = (+dateReleaseToArray[0] + 1).toString();
+        this.f['date_revision'].setValue(dateReleaseToArray.join('-'));
       });
   }
 
@@ -95,8 +123,6 @@ export class NewComponent implements OnDestroy {
     });
   }
 
- 
-
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
@@ -105,7 +131,7 @@ export class NewComponent implements OnDestroy {
     this._productService
       .verifyId(id)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((response) => {
+      .subscribe(response => {
         return response
           ? this.f['id'].setErrors({ idExists: true })
           : this.f['id'].setErrors(null);
@@ -117,6 +143,10 @@ export class NewComponent implements OnDestroy {
   clearForm() {
     this.form.reset();
     this.form.markAsPristine();
+
+    if (this.idProduct) {
+      this.f['id'].setValue(this.idProduct);
+    }
   }
 
   save() {
@@ -134,7 +164,7 @@ export class NewComponent implements OnDestroy {
         date_revision: this.f['date_revision'].value,
       })
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((res) => {
+      .subscribe(res => {
         this.clearForm();
         this._router.navigate(['/list']).then();
         this._toastService.openToast({
@@ -152,7 +182,7 @@ export class NewComponent implements OnDestroy {
         date_revision: this.f['date_revision'].value,
       })
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((res) => {
+      .subscribe(res => {
         this._toastService.openToast({
           severity: 'success',
           detail: res.message,
@@ -164,20 +194,5 @@ export class NewComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
-  }
-
-  getProduct(id: string) {
-    this._productService
-      .getProducts()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((products) => {
-        this.product = products.data.find((product) => product.id === id)!;
-        this.form.patchValue({
-          ...this.product,
-          date_release: this.product.date_release.split('T')[0],
-          date_revision: this.product.date_revision.split('T')[0],
-        });
-        this.f['id'].disable();
-      });
   }
 }
