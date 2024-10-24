@@ -9,6 +9,7 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
+    "tbuild":"jest && ng build",
     "lint": "ng lint"
   },
   "private": true,
