@@ -19,4 +19,25 @@ describe('ConfirmationModalComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have a title input', () => {
+    component.title = 'Test Title';
+    expect(component.title).toBe('Test Title');
+  });
+
+  it('should emit confirm event when confirmAction is called', () => {
+    const spy = jest.spyOn(component.confirm, 'emit'); // Espía el evento confirm
+
+    component.confirmAction();
+
+    expect(spy).toHaveBeenCalledWith(true); // Verifica que se emita el evento
+  });
+
+  it('should emit cancel event when closeAction is called', () => {
+    const spy = jest.spyOn(component.cancel, 'emit');
+
+    component.closeAction();
+
+    expect(spy).toHaveBeenCalledWith(true);
+  });
 });

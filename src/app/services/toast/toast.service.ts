@@ -7,9 +7,7 @@ import { Toast } from '@models/toast/toast';
 export class ToastService {
   display = signal<boolean>(false);
   toast = signal<Toast>({ severity: 'success', detail: '' });
-
-  constructor() {}
-
+  
   openToast(toast: Toast) {
     this.display.set(true);
     this.toast.set(toast);

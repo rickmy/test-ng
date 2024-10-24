@@ -58,6 +58,8 @@
       "@shared/validators/(.*)": "<rootDir>/src/app/shared/validators/$1",
       "@env/(.*)": "<rootDir>/src/environments/$1"
     },
-    "transformIgnorePatterns": ["node_modules/(?!.*\\.mjs$)"]
+    "transformIgnorePatterns": ["node_modules/(?!.*\\.mjs$)"],
+    "collectCoverage":true,
+    "coverageDirectory":"coverage/test-ng"
   }
 }

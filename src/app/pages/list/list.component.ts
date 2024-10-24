@@ -31,7 +31,7 @@ export class ListComponent implements OnInit, OnDestroy {
   product: Product | undefined;
   row = 5;
   pageCurrent = 1;
-  search = new FormControl('');
+  search = new FormControl<string>('');
 
   constructor(
     private _productService: ProductService,
@@ -41,6 +41,10 @@ export class ListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getProducts();
+    this.searchChange();
+  }
+
+  searchChange(){
     this.search.valueChanges
       .pipe(
         debounceTime(300),

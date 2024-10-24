@@ -1,6 +1,11 @@
 <div class="container">
   <div class="header">
-    <input type="text" placeholder="Buscar" [formControl]="search" />
+    <input
+      type="text"
+      id="search"
+      name="search"
+      placeholder="Buscar"
+      [formControl]="search" />
     <button class="btn-add" (click)="redirectNew()">Agregar</button>
   </div>
   <div class="card">

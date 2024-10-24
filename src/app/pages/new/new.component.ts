@@ -34,7 +34,7 @@ export class NewComponent implements OnDestroy {
   unsubscribe$ = new Subject<void>();
   form!: FormGroup;
   today = Date.now();
-  product: Product | undefined;
+  product: Product | null = null;
   idProduct: string | null = null;
 
   constructor(
@@ -44,6 +44,15 @@ export class NewComponent implements OnDestroy {
     private _activeRoute: ActivatedRoute,
     private _toastService: ToastService
   ) {
+    
+    this.verifyRouterId();
+    this.builderForm();
+    this.verifyChangeId();
+    this.verifyDateChange();
+   
+  }
+
+  verifyRouterId(){
     this._activeRoute.params
       .pipe(
         filter(({ id }) => !!id),
@@ -63,31 +72,33 @@ export class NewComponent implements OnDestroy {
         this.f['id'].disable();
         this.f['id'].setValue(this.idProduct);
       });
+  }
 
-    this.builderForm();
-
+  verifyChangeId(){
     this.f['id'].valueChanges
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        filter(value => value.length > 0),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe(value => {
-        if (!this.product) this.verifyId(value);
-      });
+    .pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      filter(value => value.length > 0),
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe(value => {
+      if (!this.product) this.verifyId(value);
+    });
+  }
 
+  verifyDateChange(){
     this.f['date_release'].valueChanges
-      .pipe(
-        distinctUntilChanged(),
-        takeUntil(this.unsubscribe$),
-        filter(value => !!value)
-      )
-      .subscribe((value: string) => {
-        const dateReleaseToArray = value.split('-');
-        dateReleaseToArray[0] = (+dateReleaseToArray[0] + 1).toString();
-        this.f['date_revision'].setValue(dateReleaseToArray.join('-'));
-      });
+    .pipe(
+      distinctUntilChanged(),
+      takeUntil(this.unsubscribe$),
+      filter(value => !!value)
+    )
+    .subscribe((value: string) => {
+      const dateReleaseToArray = value.split('-');
+      dateReleaseToArray[0] = (+dateReleaseToArray[0] + 1).toString();
+      this.f['date_revision'].setValue(dateReleaseToArray.join('-'));
+    });
   }
 
   builderForm() {
@@ -118,7 +129,7 @@ export class NewComponent implements OnDestroy {
       ],
       logo: [null, Validators.required],
       date_release: [null, [Validators.required, dateValidator()]],
-      date_revision: [{ value: null, disabled: true }, [Validators.required]],
+      date_revision: [{ value: null, disabled: true }],
     });
   }
 
@@ -131,7 +142,7 @@ export class NewComponent implements OnDestroy {
       .verifyId(id)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(response => {
-        return response
+        response
           ? this.f['id'].setErrors({ idExists: true })
           : this.f['id'].setErrors(null);
       });
