@@ -1,7 +1,8 @@
 <div class="container-component">
-  <span>{{ total }} Resultados</span>
+  <span data-cy="totalResult">{{ total }} Resultados</span>
   <div class="container-pagination">
     <button
+      data-cy="btnLastItem"
       class="btn-secondary"
       (click)="changePageCurrent(page - 1)"
       [disabled]="page === 1">
@@ -11,6 +12,7 @@
       @for (item of listPages; track $index) {
         <button
           class="btn-secondary"
+          data-cy="btnPage"
           (click)="changePageCurrent(item)"
           [class.active]="page === item">
           {{ item }}
@@ -19,6 +21,7 @@
     </div>
     <button
       class="btn-secondary"
+      data-cy="btnNextItem"
       (click)="changePageCurrent(page + 1)"
       [disabled]="page === totalPage">
       Siguiente
@@ -29,6 +32,7 @@
     id="row"
     [(ngModel)]="row"
     class="select-pagination"
+    data-cy="selectPagination"
     (change)="changeCountedRow()">
     @for (item of optionsRow; track $index) {
       <option [value]="item">{{ item }}</option>

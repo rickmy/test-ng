@@ -9,8 +9,11 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage",
-    "tbuild":"jest && ng build",
-    "lint": "ng lint"
+    "tbuild": "jest && ng build",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "private": true,
   "dependencies": {
@@ -35,6 +38,7 @@
     "@angular-eslint/template-parser": "17.5.2",
     "@angular/cli": "^17.0.8",
     "@angular/compiler-cli": "^17.0.0",
+    "@cypress/schematic": "^2.5.2",
     "@types/jest": "^29.5.12",
     "@types/mocha": "^10.0.7",
     "@typescript-eslint/eslint-plugin": "7.11.0",
@@ -46,7 +50,8 @@
     "jest-preset-angular": "^14.2.0",
     "prettier": "^3.3.3",
     "prettier-eslint": "^16.3.0",
-    "typescript": "~5.2.2"
+    "typescript": "~5.2.2",
+    "cypress": "latest"
   },
   "jest": {
     "preset": "jest-preset-angular",
@@ -59,8 +64,10 @@
       "@shared/validators/(.*)": "<rootDir>/src/app/shared/validators/$1",
       "@env/(.*)": "<rootDir>/src/environments/$1"
     },
-    "transformIgnorePatterns": ["node_modules/(?!.*\\.mjs$)"],
-    "collectCoverage":true,
-    "coverageDirectory":"coverage/test-ng"
+    "transformIgnorePatterns": [
+      "node_modules/(?!.*\\.mjs$)"
+    ],
+    "collectCoverage": true,
+    "coverageDirectory": "coverage/test-ng"
   }
 }

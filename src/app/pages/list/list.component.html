@@ -1,9 +1,11 @@
 <div class="container">
+  <h2>Lista de Productos</h2>
   <div class="header">
     <input
       type="text"
       id="search"
       name="search"
+      data-cy="searchProducts"
       placeholder="Buscar"
       [formControl]="search" />
     <button class="btn-add" (click)="redirectNew()">Agregar</button>
@@ -22,9 +24,9 @@
       </thead>
       <tbody>
         @for (item of productsFiltered; track item.id) {
-          <tr class="body-table">
+          <tr class="body-table" data-cy="products">
             <td><img [src]="item.logo" alt="" srcset="" class="avatar" /></td>
-            <td>{{ item.name }}</td>
+            <td data-cy="name-product">{{ item.name }}</td>
             <td>{{ item.description }}</td>
             <td>{{ item.date_release | date: 'dd/MM/yyyy' }}</td>
             <td>{{ item.date_revision | date: 'dd/MM/yyyy' }}</td>
