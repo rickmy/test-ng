@@ -49,11 +49,7 @@ describe('NewComponent', () => {
   it('verify id router id', () => {
     const id = '123';
 
-    const responseData: GeneralResponse<Product> = {
-      data: [product],
-      message: '',
-      name: '',
-    };
+    const responseData: Product[] = [product];
 
     const activedRoute = fixture.debugElement.injector.get(ActivatedRoute);
     activedRoute.params = of({ id });

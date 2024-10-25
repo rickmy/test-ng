@@ -61,7 +61,7 @@ export class NewComponent implements OnDestroy {
         takeUntil(this.unsubscribe$)
       )
       .subscribe(products => {
-        this.product = products.data.find(
+        this.product = products.find(
           product => product.id === this.idProduct
         )!;
         this.form.patchValue({

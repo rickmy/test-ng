@@ -37,7 +37,7 @@ describe('ProductService', () => {
     ];
 
     service.getProducts().subscribe(res => {
-      expect(res.data).toEqual(dummyProducts);
+      expect(res).toEqual(dummyProducts);
     });
 
     const req = httpMock.expectOne(urlBase);

@@ -57,7 +57,7 @@
     </table>
     @if (productsFiltered.length > 0) {
       <app-pagination
-        [total]="products.length"
+        [total]="store.products().length"
         [page]="pageCurrent"
         [row]="row"
         (changePage)="changePage($event)"

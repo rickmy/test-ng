@@ -4,7 +4,7 @@ import { Product } from '@models/products/product';
 import {environment} from "@env/environment";
 import { GeneralResponse } from '@models/general/general-response';
 import { ResponseApi } from '@models/general/responseApi';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,11 @@ export class ProductService {
   private readonly _urlBaseProducts = environment.urlBase + 'bp/products';
   private readonly _httpClient = inject(HttpClient);
   
-  getProducts() {
-    return this._httpClient.get<GeneralResponse<Product>>(this._urlBaseProducts);
+  getProducts(): Observable<Product[]> {
+    return this._httpClient.get<GeneralResponse<Product>>(this._urlBaseProducts)
+      .pipe(
+        map(res => res.data)
+      );
   }
 
   verifyId(id: string) {

@@ -5,11 +5,11 @@ import { of } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { ProductService } from '@services/api/product.service';
 import { Product } from '@models/products/product';
-import { GeneralResponse } from '@models/general/general-response';
 import { ToastService } from '@services/toast/toast.service';
 import { ResponseApi } from '@models/general/responseApi';
 import { provideRouter, Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { signal } from '@angular/core';
 
 const product: Product = {
   id: '12',
@@ -20,11 +20,7 @@ const product: Product = {
   description: '',
 };
 
-const responseData: GeneralResponse<Product> = {
-  data: [product],
-  message: '',
-  name: '',
-};
+const responseData: Product[] = [product];
 
 class TestRouteComponent {}
 describe('ListComponent', () => {
@@ -59,26 +55,29 @@ describe('ListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should getProducts works correct', () => {
+  it('should getProducts works correct', async () => {
     const spy = jest
-      .spyOn(productService, 'getProducts')
-      .mockReturnValueOnce(of(responseData));
-    component.products = [];
+      .spyOn(component.store, 'getAllProducts')
+      .mockReturnValueOnce(new Promise((resolve)=> {
+        resolve()
+      }));
     component.row = 1;
-    component.getProducts();
+    await component.store.getAllProducts();
+    component.store.products = signal(responseData);
     expect(spy).toHaveBeenCalledTimes(1);
-    expect(component.products).toEqual(responseData.data);
+    expect(component.store.products()).toEqual(responseData);
   });
 
-  it('should getProducts works with empty', () => {
+  it('should getProducts works with empty', async () => {
     const spy = jest
-      .spyOn(productService, 'getProducts')
-      .mockReturnValueOnce(of(responseData));
-    component.products = [];
+      .spyOn(component.store, 'getAllProducts')
+      .mockReturnValueOnce(new Promise((resolve)=> {
+        resolve()
+      }));
     component.row = 0;
-    component.getProducts();
+    await component.store.getAllProducts();
     expect(spy).toHaveBeenCalledTimes(1);
-    expect(component.products).toEqual(responseData.data);
+    expect(component.store.products()).toEqual([]);
   });
 
   it('should showModal works correct', () => {
@@ -123,7 +122,7 @@ describe('ListComponent', () => {
   });
 
   it('change value in search', async ()=> {
-    component.products = [product];
+    component.store.products = signal([product]);
     const searchBox =
         (fixture.debugElement.query(By.css('#search'))
           ?.nativeElement as HTMLTextAreaElement) || undefined;
