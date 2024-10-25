@@ -5,11 +5,19 @@
   width: 50%;
 }
 
+.btn-back {
+  border: none;
+  padding: 10px;
+  border-radius: 25px;
+  margin: 5px;
+  width: 10%;
+}
+
 .form-header {
   border-bottom: 1px solid #ccc;
-  padding: 1rem;
   text-align: center;
 }
+
 
 .form-body {
   padding: 4rem;
@@ -76,3 +84,4 @@
     width: 75%;
   }
  }
+

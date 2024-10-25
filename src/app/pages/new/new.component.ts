@@ -17,7 +17,7 @@ import {
   takeUntil,
   tap,
 } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Product } from '@models/products/product';
 import { ToastService } from '@services/toast/toast.service';
 import { ProductService } from '@services/api/product.service';
@@ -26,7 +26,7 @@ import { dateValidator } from '@shared/validators/date.validator';
 @Component({
   selector: 'app-new',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './new.component.html',
   styleUrl: './new.component.css'
 })

@@ -1,7 +1,9 @@
 <div class="container">
   <form [formGroup]="form" (ngSubmit)="save()" class="form">
+    <button class="btn-back" type="button" [routerLink]="['/']"><- Atras</button>
+
     <div class="form-header">
-      <h2>Formulario de Registro</h2>
+      <h2 class="title-form">Formulario de Registro</h2>
     </div>
     <div class="form-body">
       <div class="form-separator">
