@@ -7,11 +7,7 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import {
-  addEntity,
-  updateEntity,
-  withEntities,
-} from '@ngrx/signals/entities';
+import { addEntity, updateEntity, withEntities } from '@ngrx/signals/entities';
 import { ProductService } from '@services/api/product.service';
 import { ToastService } from '@services/toast/toast.service';
 import { lastValueFrom } from 'rxjs';
@@ -48,33 +44,39 @@ export const ProductsStore = signalStore(
     ) => ({
       async getAllProducts() {
         const products = await lastValueFrom(productService.getProducts());
-        patchState(store, {products});
+        patchState(store, { products });
       },
       getProduct(id: string) {
         return store.products().find(product => product.id === id);
       },
-      async addProduct(product: Product) {
-        try {
-          await lastValueFrom(productService.postProduct(product));
-          patchState(store, addEntity(product));
-        } catch (error) {
-          console.error(error);
-        }
+      addProduct(product: Product) {
+        productService.postProduct(product).subscribe({
+          next: (res) => {
+            patchState(store, addEntity(product));
+            toastService.openToast({
+              severity: 'success',
+              detail: res.message,
+            });
+          }
+        })
       },
-      async updateProduct(product: Product) {
-        try {
-          await lastValueFrom(productService.putProduct(product));
-          patchState(store, updateEntity({ id: product.id, changes: product }));
-        } catch (error) {
-          console.error(error);
-        }
+      updateProduct(product: Product) {
+        productService.putProduct(product).subscribe({
+          next: (res) => {
+            patchState(store, updateEntity({ id: product.id, changes: product }));
+            toastService.openToast({
+              severity: 'success',
+              detail: res.message,
+            });
+          }
+        });
       },
       async removeProduct(id: string) {
         try {
           const res = await lastValueFrom(productService.deleteProduct(id));
           patchState(store, ({ products }) => ({
-            products: products.filter(prod => prod.id !== id)
-          }) );
+            products: products.filter(prod => prod.id !== id),
+          }));
           toastService.openToast({
             severity: 'success',
             detail: res.message,

@@ -58,8 +58,9 @@ describe('ListComponent', () => {
   it('should getProducts works correct', async () => {
     const spy = jest
       .spyOn(component.store, 'getAllProducts')
-      .mockReturnValueOnce(new Promise((resolve)=> {
-        resolve()
+      .mockReturnValueOnce(new Promise((resolve, reject)=> {
+        resolve(),
+        reject()
       }));
     component.row = 1;
     await component.store.getAllProducts();
